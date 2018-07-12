@@ -1,0 +1,1 @@
+qsub -t 1-41 array_job.sh

@@ -1,0 +1,3 @@
+perl /home/ifs-users/vfrap/Bcl2/script/run_dterm_on_peptide.pl /home/ifs-users/vfrap/Bcl2/weird_pdb/5uul_with_cryst_flip.pdb 35
+perl /home/ifs-users/vfrap/Bcl2/script/run_dterm_on_peptide.pl /home/ifs-users/vfrap/Bcl2/weird_pdb/flip_reverse_man.pdb 35
+perl /home/ifs-users/vfrap/Bcl2/script/run_dterm_on_peptide.pl /home/ifs-users/vfrap/Bcl2/weird_pdb/resolve_flip.pdb 35
