@@ -107,7 +107,7 @@ MinOver = 3 # You don't want to go below 3, cuz you have some real weird structu
 
 
 #Glob all file
-AllFile = glob.glob("./nchains1_nres5_*.pdb") #In the folder where the jobs was run
+AllFile = glob.glob("./nchains1_*.pdb") #In the folder where the jobs was run
 
 #Load AllFile
 print("Loading %d File(s)" % (len(AllFile)))
