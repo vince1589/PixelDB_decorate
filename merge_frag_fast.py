@@ -7,7 +7,7 @@ import numpy as np
 import os
 from collections import defaultdict
 
-
+#Some function
 def get_peptide(PDB,chain="B"):
     tempPep = []
     for res in PDB:
@@ -102,12 +102,12 @@ Sector = dict()
 #Find possible overlap
 #(Min overlap node need to have to be stich)
 
-Overlap = 4
+Overlap = 5
 MinOver = 3 # You don't want to go below 3, cuz you have some real weird structure that get created
 
 
 #Glob all file
-AllFile = glob.glob("./run/nchains1_*.pdb") #In the folder where the jobs was run
+AllFile = glob.glob("./nchains1_nres5_*.pdb") #In the folder where the jobs was run
 
 #Load AllFile
 print("Loading %d File(s)" % (len(AllFile)))
@@ -295,7 +295,7 @@ for p in all_paths:
     #print(PathOver)
     Score = 0.0
     for i in range(len(p)):
-        Score += float(re.search("score(.*)_rmsd",p[i]).group(1))
+        Score += float(re.search("score(-*\d+\.*\d+)_",p[i]).group(1))
         pdb1 = AllFrag[p[i]]
         for j in range(len(pdb1)):
             nci = PathOver[i] + j
@@ -303,8 +303,8 @@ for p in all_paths:
                 MergeCoord[nci] = []
             MergeCoord[nci].append(p[i]+" "+pdb1[j]["resnumc"])
     print(len(p),Score,len(MergeCoord),np.mean(MergeOver),np.min(MergeOver))
-    if len(MergeCoord) < 8:
-        continue
+    #if len(MergeCoord) < 8:
+    #    continue
     MergePDB = []
     for k in MergeCoord:
         AllCord = []
@@ -336,7 +336,13 @@ for p in all_paths:
             MergePDB.append(r)
     #die
     Id += 1
-    fname = "./binding_pose/" + "_".join([str(len(MergeCoord)),str(int(Score*100.0)),str(len(p)),str(int(np.min(MergeOver))),str(Id)]) + ".pdb"
+    
+    #nchains1_nres10_score1.922_-0.200_rmsd0.287_term049253_chidsA_match40.pdb
+    
+    merge_name = ["nchains1","nres"+str(len(MergeCoord)),"score"+"%.3f" % (Score),"0.000","rmsd0.000","term"+str(len(p)),"chidsZ","match"+str(Id)]
+    
+    #fname = "./binding_pose/" + "_".join(["res"+str(len(MergeCoord)),"score"+"%.3f" %(Score),"frag"+str(len(p)),"MinOver"+str(int(np.min(MergeOver))),str(Id)]) + ".pdb"
+    fname = "./binding_pose/" + "_".join(merge_name) + ".pdb"
     print_pdb(fname,MergePDB)
 
 
